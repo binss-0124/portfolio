@@ -1,14 +1,42 @@
 import { contact, experience, profile, projects, skills } from './data'
 import DynamicBackground from './DynamicBackground';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // 위로 스크롤할 때 헤더 보이기
+      if (currentScrollY < lastScrollY) {
+        setIsHeaderVisible(true);
+      } 
+      // 아래로 스크롤할 때 헤더 숨기기 (최상단이 아닐 때)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+      }
+      
+      // 최상단일 때는 항상 헤더 보이기
+      if (currentScrollY < 100) {
+        setIsHeaderVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
     <>
       <DynamicBackground />
       <div className="blog-layout">
         {/* 블로그 헤더 */}
-        <header className="blog-header">
+        <header className={`blog-header ${isHeaderVisible ? 'visible' : 'hidden'}`}>
           <div className="blog-header-content">
             <div className="site-title">
               <h1>Yubin DevLog</h1>
