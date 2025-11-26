@@ -58,25 +58,7 @@ function App() {
               </div>
             </div>
 
-            {/* 카테고리 */}
-            <div className="categories">
-              <h4>Categories</h4>
-              <ul>
-                <li><a href="#projects">📌 Projects</a></li>
-                <li><a href="#experience">💼 Experience</a></li>
-                <li><a href="#skills">🛠️ Skills</a></li>
-              </ul>
-            </div>
 
-            {/* 태그 */}
-            <div className="tags-sidebar">
-              <h4>Tags</h4>
-              <div className="tags-list">
-                {[...new Set([...skills.core, ...skills.ui, ...skills.tooling])].slice(0, 12).map((tag) => (
-                  <a key={tag} href={`#tag-${tag}`} className="tag-link">{tag}</a>
-                ))}
-              </div>
-            </div>
           </aside>
 
           {/* 메인 컨텐츠 */}
@@ -90,6 +72,8 @@ function App() {
                 <span>🕐 {profile.availability}</span>
               </div>
             </section>
+
+            {/* 카테고리 섹션 완전 제거 */}
 
             {/* About 섹션 */}
             <section id="about" className="blog-section">

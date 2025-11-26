@@ -1,14 +1,14 @@
 export const profile = {
   name: '조유빈',
   role: 'Full Stack Developer',
-  tagline: '컴퓨터공학 기반의 시스템 사고로 제품을 설계합니다',
+  tagline: '안정적이고 확장 가능한 백엔드 시스템으로 비즈니스 가치를 만듭니다',
   summary:
-    '컴퓨터공학과에서 배운 운영체제 · 네트워크 · 알고리즘 지식을 실전 서비스 구조에 녹여냅니다. React · Next.js로 인터페이스를 만들고, Node · Nest · Prisma로 서버 로직과 데이터 모델을 설계하며 DevOps 파이프라인까지 책임집니다.',
+    '견고한 백엔드 아키텍처와 데이터 모델 설계가 제 강점입니다. Node.js, NestJS, Prisma로 고성능 서버를 구축하고, PostgreSQL과 Redis로 데이터를 효율적으로 관리합니다. 필요시 React, Next.js로 풀스택 개발도 가능하며, AWS와 Docker 기반 DevOps 파이프라인 구축 경험이 있습니다.',
   location: 'Seoul, South Korea',
   availability: '2026 Q1부터 신규 프로젝트 합류 가능',
   email: 'hello@kimfolio.dev',
   image: '/profile.jpg', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
-  intro: '안녕하세요! 컴퓨터공학을 전공하며 시스템과 소프트웨어에 대한 깊은 이해를 바탕으로 실용적인 솔루션을 만들어가는 개발자입니다. 사용자 경험과 기술적 우아함의 균형을 추구하며, 지속 가능하고 확장 가능한 코드를 작성하는 것을 목표로 합니다.',
+  intro: '안녕하세요! 백엔드와 풀스택 개발에 열정을 가진 개발자 조유빈입니다. 시스템 설계, 데이터 모델링, API 아키텍처에 집중하며, 사용자가 신뢰할 수 있는 견고한 서비스를 만드는 것을 목표로 합니다. 확장 가능한 코드 작성과 성능 최적화를 중요하게 생각합니다.',
 }
 
 export const skills = {
@@ -99,8 +99,8 @@ export const experience = [
 
 export const contact = {
   email: 'hello@kimfolio.dev',
-  github: 'https://github.com/kimfolio',
+  github: 'https://github.com/binss-0124',
   linkedIn: 'https://linkedin.com/in/kimfolio',
   resume: 'https://drive.google.com/kimfolio-resume',
 }
-
+ 

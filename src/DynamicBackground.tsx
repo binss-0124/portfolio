@@ -1,15 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './DynamicBackground.css';
 
-const NUM_PARTICLES = 22;
+const NUM_PARTICLES = 18;
 const PARTICLE_SIZE = 32;
 const PARTICLE_COLORS = [
-  '#e0f2fe', // 밝은 하늘
+  '#f8fafc', // 거의 흰색
   '#f0f9ff', // 밝은 파스텔
-  '#c3f0ff', // 밝은 블루
   '#fffde4', // 밝은 노랑
-  '#baffff', // 밝은 민트
-  '#e0e7ff', // 밝은 보라
 ];
 
 const DynamicBackground = () => {
@@ -19,7 +16,7 @@ const DynamicBackground = () => {
   // 파스텔톤 원 위치 및 속도 생성
   const generateParticle = () => {
     const angle = Math.random() * 2 * Math.PI;
-    const speed = 0.2 + Math.random() * 0.4;
+    const speed = 0.15 + Math.random() * 0.25;
     return {
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
@@ -27,7 +24,7 @@ const DynamicBackground = () => {
       vy: Math.sin(angle) * speed,
       color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
       size: PARTICLE_SIZE * (0.7 + Math.random() * 0.6),
-      opacity: 0.18 + Math.random() * 0.22,
+      opacity: 0.08 + Math.random() * 0.08,
     };
   };
 
@@ -68,7 +65,7 @@ const DynamicBackground = () => {
             r={p.size / 2}
             fill={p.color}
             opacity={p.opacity}
-            style={{ filter: 'blur(16px)' }}
+            style={{ filter: 'blur(24px)' }}
           />
         ))}
       </svg>
