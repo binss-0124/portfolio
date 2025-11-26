@@ -1,313 +1,288 @@
 import { contact, experience, profile, projects, skills } from './data'
-
-const SectionTitle = ({ label }: { label: string }) => (
-  <div className="section-title">
-    <span className="section-bar" />
-    <h2>{label}</h2>
-  </div>
-)
+import DynamicBackground from './DynamicBackground';
+import { useState } from 'react';
 
 function App() {
   return (
-    <div className="page">
-      <header className="hero" id="home">
-        <nav className="nav">
-          <div className="brand">Kimfolio</div>
-          <div className="nav-links">
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="#experience">Experience</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </nav>
-
-        <div className="profile-section">
-          <div className="profile-image-container">
-            <img 
-              src={profile.image || '/placeholder-profile.jpg'} 
-              alt={`${profile.name} 프로필 사진`}
-              className="profile-image"
-              onError={(e) => {
-                // 이미지가 없을 경우 플레이스홀더 표시
-                e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjVmOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Qcm9maWxlPC90ZXh0Pjwvc3ZnPg==';
-              }}
-            />
-          </div>
-          <div className="profile-intro">
-            <h2 className="profile-name">{profile.name}</h2>
-            <p className="profile-intro-text">{profile.intro}</p>
-          </div>
-        </div>
-
-        <div className="hero-tags">
-          <span>Computer Engineering Dept.</span>
-          <span>Full Stack & Systems</span>
-          <span>OS · Network · Algorithm</span>
-        </div>
-
-        <div className="hero-content">
-          <div>
-            <p className="eyebrow">{profile.role}</p>
-            <h1>{profile.tagline}</h1>
-            <p className="lead">{profile.summary}</p>
-            <div className="hero-meta">
-              <span>{profile.location}</span>
-              <span>{profile.availability}</span>
+    <>
+      <DynamicBackground />
+      <div className="blog-layout">
+        {/* 블로그 헤더 */}
+        <header className="blog-header">
+          <div className="blog-header-content">
+            <div className="site-title">
+              <h1>Kimfolio</h1>
+              <p>개발자의 기술 블로그</p>
             </div>
-            <div className="hero-actions">
-              <a className="btn primary" href="#projects">
-                최근 작업 보기
-              </a>
-              <a className="btn ghost" href={`mailto:${profile.email}`}>
-                연락하기
-              </a>
-            </div>
+            <nav className="blog-nav">
+              <a href="#home">Home</a>
+              <a href="#about">About</a>
+              <a href="#projects">Projects</a>
+              <a href="#experience">Experience</a>
+              <a href="#contact">Contact</a>
+            </nav>
           </div>
-          <div className="hero-card code-panel">
-            <div className="code-panel-header">
-              <span>/systems/portfolio.log</span>
-              <span className="status-dot" />
-            </div>
-            <pre>
-{`const interests = ['Distributed Systems', 'Realtime Game Dev', 'DevOps'];
-const dna = {
-  major: 'Computer Engineering',
-  mindset: 'Problem Solver',
-  currentFocus: ['Full Stack', 'Simulation']
-};`}
-            </pre>
-          </div>
-        </div>
-      </header>
+        </header>
 
-      <main>
-        <section id="projects">
-          <SectionTitle label="Selected Projects" />
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article key={project.name} className="project-card">
-                <div className="project-headline">
-                  <a
-                    className="project-icon-link"
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`${project.name} ${project.icon ? '플레이하기' : '방문하기'}`}
-                  >
-                    {project.icon ? (
-                      <img src={project.icon} alt={`${project.name} 아이콘`} />
-                    ) : (
-                      <div className="project-icon-placeholder">
-                        <svg
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 2L2 7L12 12L22 7L12 2Z"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M2 17L12 22L22 17"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M2 12L12 17L22 12"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-                    )}
-                  </a>
-                  <div className="project-headline-text">
-                    <p className="project-period">{project.period}</p>
-                    <h3>{project.name}</h3>
+        {/* 메인 레이아웃 */}
+        <div className="blog-main">
+          {/* 사이드바 */}
+          <aside className="blog-sidebar">
+            {/* 작가 소개 */}
+            <div className="author-card">
+              <img 
+                src={profile.image || '/placeholder-profile.jpg'} 
+                alt={profile.name}
+                className="author-image"
+                onError={(e) => {
+                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjVmOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Qcm9maWxlPC90ZXh0Pjwvc3ZnPg==';
+                }}
+              />
+              <h3>{profile.name}</h3>
+              <p className="author-role">{profile.role}</p>
+              <p className="author-bio">{profile.intro}</p>
+              <div className="author-stats">
+                <div className="stat">
+                  <span className="stat-label">Projects</span>
+                  <span className="stat-value">{projects.length}</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-label">Experience</span>
+                  <span className="stat-value">{experience.length}</span>
+                </div>
+              </div>
+              <div className="author-links">
+                <a href={contact.github} target="_blank" rel="noreferrer" title="GitHub">🐙</a>
+                <a href={contact.linkedIn} target="_blank" rel="noreferrer" title="LinkedIn">💼</a>
+                <a href={`mailto:${contact.email}`} title="Email">✉️</a>
+              </div>
+            </div>
+
+            {/* 카테고리 */}
+            <div className="categories">
+              <h4>Categories</h4>
+              <ul>
+                <li><a href="#projects">📌 Projects</a></li>
+                <li><a href="#experience">💼 Experience</a></li>
+                <li><a href="#skills">🛠️ Skills</a></li>
+              </ul>
+            </div>
+
+            {/* 태그 */}
+            <div className="tags-sidebar">
+              <h4>Tags</h4>
+              <div className="tags-list">
+                {[...new Set([...skills.core, ...skills.ui, ...skills.tooling])].slice(0, 12).map((tag) => (
+                  <a key={tag} href={`#tag-${tag}`} className="tag-link">{tag}</a>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          {/* 메인 컨텐츠 */}
+          <main className="blog-content">
+            {/* 홈 배너 */}
+            <section id="home" className="blog-hero">
+              <h1>{profile.tagline}</h1>
+              <p className="hero-subtitle">{profile.summary}</p>
+              <div className="hero-meta">
+                <span>📍 {profile.location}</span>
+                <span>🕐 {profile.availability}</span>
+              </div>
+            </section>
+
+            {/* About 섹션 */}
+            <section id="about" className="blog-section">
+              <h2>👋 About Me</h2>
+              <article className="blog-post">
+                <div className="post-content">
+                  <p>{profile.summary}</p>
+                  <h3>Core Skills</h3>
+                  <div className="skills-showcase">
+                    {skills.core.map((skill) => (
+                      <span key={skill} className="skill-badge">{skill}</span>
+                    ))}
                   </div>
                 </div>
-                <div className="project-video">
-                  {project.video ? (
-                    (() => {
-                      const videoUrl = project.video;
-                      // YouTube URL 처리
-                      if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                        let embedUrl = '';
-                        if (videoUrl.includes('youtube.com/embed')) {
-                          embedUrl = videoUrl;
-                        } else if (videoUrl.includes('youtu.be/')) {
-                          const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
-                          embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                        } else if (videoUrl.includes('youtube.com/watch')) {
-                          const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
-                          embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                        }
-                        return (
-                          <iframe
-                            src={embedUrl}
-                            title={`${project.name} 시연 영상`}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            className="project-video-iframe"
-                          />
-                        );
-                      }
-                      // Vimeo URL 처리
-                      if (videoUrl.includes('vimeo.com')) {
-                        let embedUrl = '';
-                        if (videoUrl.includes('player.vimeo.com')) {
-                          embedUrl = videoUrl;
-                        } else {
-                          const videoId = videoUrl.split('vimeo.com/')[1]?.split('?')[0] || '';
-                          embedUrl = `https://player.vimeo.com/video/${videoId}`;
-                        }
-                        return (
-                          <iframe
-                            src={embedUrl}
-                            title={`${project.name} 시연 영상`}
-                            frameBorder="0"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowFullScreen
-                            className="project-video-iframe"
-                          />
-                        );
-                      }
-                      // 로컬 비디오 파일
-                      return (
-                        <video
-                          src={videoUrl}
-                          controls
-                          className="project-video-element"
-                          preload="metadata"
-                        >
-                          브라우저가 비디오 태그를 지원하지 않습니다.
-                        </video>
-                      );
-                    })()
-                  ) : (
-                    <div className="project-video-placeholder">
-                      <svg
-                        width="64"
-                        height="64"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="project-video-placeholder-icon"
-                      >
-                        <path
-                          d="M8 5V19L19 12L8 5Z"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <p className="project-video-placeholder-text">시연 영상 준비 중</p>
+              </article>
+            </section>
+
+            {/* Projects 섹션 */}
+            <section id="projects" className="blog-section">
+              <h2>📝 Featured Projects</h2>
+              <div className="blog-posts">
+                {projects.slice(0, 5).map((project) => (
+                  <article key={project.name} className="blog-post">
+                    <div className="post-header">
+                      <h3 className="post-title">{project.name}</h3>
+                      <span className="post-date">{project.period}</span>
                     </div>
-                  )}
+                    
+                    {project.video && (
+                      <div className="post-video">
+                        {(() => {
+                          const videoUrl = project.video;
+                          if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                            let embedUrl = '';
+                            if (videoUrl.includes('youtube.com/embed')) {
+                              embedUrl = videoUrl;
+                            } else if (videoUrl.includes('youtu.be/')) {
+                              const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
+                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            } else if (videoUrl.includes('youtube.com/watch')) {
+                              const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
+                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            }
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                title={`${project.name} 시연 영상`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="video-iframe"
+                              />
+                            );
+                          }
+                          if (videoUrl.includes('vimeo.com')) {
+                            let embedUrl = '';
+                            if (videoUrl.includes('player.vimeo.com')) {
+                              embedUrl = videoUrl;
+                            } else {
+                              const videoId = videoUrl.split('vimeo.com/')[1]?.split('?')[0] || '';
+                              embedUrl = `https://player.vimeo.com/video/${videoId}`;
+                            }
+                            return (
+                              <iframe
+                                src={embedUrl}
+                                title={`${project.name} 시연 영상`}
+                                frameBorder="0"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowFullScreen
+                                className="video-iframe"
+                              />
+                            );
+                          }
+                          return (
+                            <video
+                              src={videoUrl}
+                              controls
+                              className="video-element"
+                              preload="metadata"
+                            />
+                          );
+                        })()}
+                      </div>
+                    )}
+                    
+                    <div className="post-content">
+                      <p>{project.summary}</p>
+                      <div className="post-meta">
+                        <span className="impact">✨ {project.impact}</span>
+                      </div>
+                    </div>
+
+                    <div className="post-footer">
+                      <div className="post-tags">
+                        {project.tech.map((tech) => (
+                          <a key={tech} href={`#tag-${tech}`} className="post-tag">{tech}</a>
+                        ))}
+                      </div>
+                      <a href={project.link} target="_blank" rel="noreferrer" className="read-more">View Project →</a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            {/* Experience 섹션 */}
+            <section id="experience" className="blog-section">
+              <h2>💼 Experience</h2>
+              <div className="experience-timeline">
+                {experience.map((exp) => (
+                  <div key={exp.company} className="timeline-item">
+                    <div className="timeline-marker"></div>
+                    <div className="timeline-content">
+                      <h3 className="exp-title">{exp.role}</h3>
+                      <p className="exp-company">{exp.company}</p>
+                      <p className="exp-period">{exp.period}</p>
+                      <ul className="exp-details">
+                        {exp.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Skills 섹션 */}
+            <section id="skills" className="blog-section">
+              <h2>🛠️ Tech Stack</h2>
+              <div className="skills-grid">
+                <div className="skill-group">
+                  <h4>Backend / Full Stack</h4>
+                  <div className="skill-items">
+                    {skills.core.map((skill) => (
+                      <span key={skill} className="skill-item">{skill}</span>
+                    ))}
+                  </div>
                 </div>
-                <p className="project-summary">{project.summary}</p>
-                <p className="project-impact">{project.impact}</p>
-                <ul className="chip-list">
-                  {project.tech.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="skills">
-          <SectionTitle label="Capabilities" />
-          <div className="skills">
-            <div>
-              <h3>Core Stack</h3>
-              <ul>
-                {skills.core.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3>UI · Experience</h3>
-              <ul>
-                {skills.ui.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3>Tooling</h3>
-              <ul>
-                {skills.tooling.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="experience">
-          <SectionTitle label="Experience" />
-          <div className="experience-list">
-            {experience.map((item) => (
-              <article key={item.company} className="experience-card">
-                <div>
-                  <p className="project-period">{item.period}</p>
-                  <h3>
-                    {item.role} · {item.company}
-                  </h3>
+                <div className="skill-group">
+                  <h4>UI / UX</h4>
+                  <div className="skill-items">
+                    {skills.ui.map((skill) => (
+                      <span key={skill} className="skill-item">{skill}</span>
+                    ))}
+                  </div>
                 </div>
-                <ul>
-                  {item.details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
+                <div className="skill-group">
+                  <h4>DevOps & Infrastructure</h4>
+                  <div className="skill-items">
+                    {skills.tooling.map((skill) => (
+                      <span key={skill} className="skill-item">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Contact 섹션 */}
+            <section id="contact" className="blog-section contact-section">
+              <h2>💬 Get In Touch</h2>
+              <article className="blog-post">
+                <p className="contact-intro">새로운 기회나 협업에 대해 이야기하고 싶으신가요? 언제든지 연락해주세요!</p>
+                <div className="contact-links">
+                  <a href={`mailto:${contact.email}`} className="contact-btn email">
+                    <span>✉️</span>
+                    <span>Email</span>
+                  </a>
+                  <a href={contact.github} target="_blank" rel="noreferrer" className="contact-btn github">
+                    <span>🐙</span>
+                    <span>GitHub</span>
+                  </a>
+                  <a href={contact.linkedIn} target="_blank" rel="noreferrer" className="contact-btn linkedin">
+                    <span>💼</span>
+                    <span>LinkedIn</span>
+                  </a>
+                  <a href={contact.resume} target="_blank" rel="noreferrer" className="contact-btn resume">
+                    <span>📄</span>
+                    <span>Resume</span>
+                  </a>
+                </div>
               </article>
-            ))}
-          </div>
-        </section>
+            </section>
+          </main>
+        </div>
 
-        <section id="contact">
-          <SectionTitle label="Next Step" />
-          <div className="contact-card">
-            <div>
-              <p>새로운 팀과 함께할 대화를 기다리고 있어요.</p>
-              <p>아이디어가 있다면 편하게 메시지 주세요.</p>
-            </div>
-            <div className="contact-links">
-              <a href={`mailto:${contact.email}`}>{contact.email}</a>
-              <a href={contact.github} target="_blank" rel="noreferrer">
-                GitHub ↗
-              </a>
-              <a href={contact.linkedIn} target="_blank" rel="noreferrer">
-                LinkedIn ↗
-              </a>
-              <a href={contact.resume} target="_blank" rel="noreferrer">
-                Resume ↗
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer>
-        <p>© {new Date().getFullYear()} {profile.name}. Made with React & Vite.</p>
-      </footer>
-    </div>
+        {/* 푸터 */}
+        <footer className="blog-footer">
+          <p>&copy; {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+        </footer>
+      </div>
+    </>
   )
 }
 
 export default App
-
