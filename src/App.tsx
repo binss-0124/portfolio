@@ -31,6 +31,22 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  const [activeTab, setActiveTab] = useState<'frontend' | 'backend' | 'ai'>('frontend');
+  // 프론트엔드/백엔드/AI&툴 기술 분류
+  const frontendSkills = [
+    skills.core.find(s => s.name === 'TypeScript'),
+    skills.core.find(s => s.name === 'React'),
+    skills.core.find(s => s.name === 'Next.js'),
+    ...skills.ui,
+  ].filter(Boolean);
+  const backendSkills = [
+    skills.core.find(s => s.name === 'Node.js'),
+    skills.core.find(s => s.name === 'NestJS'),
+    skills.core.find(s => s.name === 'Prisma'),
+    ...skills.tooling,
+  ].filter(Boolean);
+  // AI & Tools는 tooling 전체로 대체
+  const aiSkills = [...skills.tooling].filter(Boolean);
   return (
     <>
       <DynamicBackground />
@@ -127,88 +143,141 @@ function App() {
               <h2>📝 Featured Projects</h2>
               <div className="blog-posts">
                 {projects.slice(0, 5).map((project) => (
-                  <article key={project.name} className="blog-post">
-                    <div className="post-header">
-                      <h3 className="post-title">{project.name}</h3>
-                      <span className="post-date">{project.period}</span>
-                    </div>
-                    {/* 영상 공간 항상 표시 */}
-                    <div className="post-video">
-                      {project.video ? (
-                        (() => {
-                          const videoUrl = project.video;
-                          if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                            let embedUrl = '';
-                            if (videoUrl.includes('youtube.com/embed')) {
-                              embedUrl = videoUrl;
-                            } else if (videoUrl.includes('youtu.be/')) {
-                              const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
-                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                            } else if (videoUrl.includes('youtube.com/watch')) {
-                              const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
-                              embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                            }
-                            return (
-                              <iframe
-                                src={embedUrl}
-                                title={`${project.name} 시연 영상`}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="video-iframe"
-                              />
-                            );
-                          }
-                          if (videoUrl.includes('vimeo.com')) {
-                            let embedUrl = '';
-                            if (videoUrl.includes('player.vimeo.com')) {
-                              embedUrl = videoUrl;
-                            } else {
-                              const videoId = videoUrl.split('vimeo.com/')[1]?.split('?')[0] || '';
-                              embedUrl = `https://player.vimeo.com/video/${videoId}`;
-                            }
-                            return (
-                              <iframe
-                                src={embedUrl}
-                                title={`${project.name} 시연 영상`}
-                                frameBorder="0"
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowFullScreen
-                                className="video-iframe"
-                              />
-                            );
-                          }
-                          return (
-                            <video
-                              src={videoUrl}
-                              controls
-                              className="video-element"
-                              preload="metadata"
-                            />
-                          );
-                        })()
-                      ) : (
-                        <div className="video-placeholder">
-                          <span style={{fontSize:'2.2rem'}}>🎬</span>
-                          <div style={{color:'#888',marginTop:'8px'}}>시연 영상 준비 중</div>
+                  <article key={project.name} className="project-card-modern">
+                    {/* 왼쪽: 프로젝트 배경 영역 */}
+                    <div className="project-card-left">
+                      <div className="project-card-bg">
+                        {/* LIVE 배지 */}
+                        <div className="live-badge">
+                          <span className="live-dot"></span>
+                          LIVE
                         </div>
-                      )}
-                    </div>
-                    
-                    <div className="post-content">
-                      <p>{project.summary}</p>
-                      <div className="post-meta">
-                        <span className="impact">✨ {project.impact}</span>
+                        
+                        {/* 프로젝트 아이콘/제목 */}
+                        <div className="project-card-header">
+                          {project.icon ? (
+                            <img src={project.icon} alt={project.name} className="project-icon" />
+                          ) : (
+                            <div className="project-icon-placeholder">📦</div>
+                          )}
+                          <div className="project-card-title">
+                            <h3>{project.name}</h3>
+                            <p>{project.period}</p>
+                          </div>
+                        </div>
+
+                        {/* 비디오 공간 */}
+                        <div className="project-video-container">
+                          {project.video ? (
+                            (() => {
+                              const videoUrl = project.video;
+                              if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                                let embedUrl = '';
+                                if (videoUrl.includes('youtube.com/embed')) {
+                                  embedUrl = videoUrl;
+                                } else if (videoUrl.includes('youtu.be/')) {
+                                  const videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0] || '';
+                                  embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                                } else if (videoUrl.includes('youtube.com/watch')) {
+                                  const videoId = videoUrl.split('v=')[1]?.split('&')[0] || '';
+                                  embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                                }
+                                return (
+                                  <iframe
+                                    src={embedUrl}
+                                    title={`${project.name} 시연 영상`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="project-video"
+                                  />
+                                );
+                              }
+                              if (videoUrl.includes('vimeo.com')) {
+                                let embedUrl = '';
+                                if (videoUrl.includes('player.vimeo.com')) {
+                                  embedUrl = videoUrl;
+                                } else {
+                                  const videoId = videoUrl.split('vimeo.com/')[1]?.split('?')[0] || '';
+                                  embedUrl = `https://player.vimeo.com/video/${videoId}`;
+                                }
+                                return (
+                                  <iframe
+                                    src={embedUrl}
+                                    title={`${project.name} 시연 영상`}
+                                    frameBorder="0"
+                                    allow="autoplay; fullscreen; picture-in-picture"
+                                    allowFullScreen
+                                    className="project-video"
+                                  />
+                                );
+                              }
+                              return (
+                                <video
+                                  src={videoUrl}
+                                  controls
+                                  className="project-video"
+                                  preload="metadata"
+                                />
+                              );
+                            })()
+                          ) : (
+                            <div className="project-video-placeholder">
+                              <span>🎬</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
 
-                    <div className="post-footer">
-                      <div className="post-tags">
-                        {project.tech.map((tech) => (
-                          <a key={tech + '-' + project.name} href={`#tag-${typeof tech === 'string' ? tech : tech.name}`} className="post-tag">{typeof tech === 'string' ? tech : tech.name}</a>
-                        ))}
+                    {/* 오른쪽: 프로젝트 정보 영역 */}
+                    <div className="project-card-right">
+                      {/* 설명 */}
+                      <p className="project-description">{project.summary}</p>
+
+                      {/* 영향도 */}
+                      <div className="project-impact">
+                        <span>✨ {project.impact}</span>
                       </div>
-                      <a href={project.link} target="_blank" rel="noreferrer" className="read-more">View Project →</a>
+
+                      {/* 기술 스택 */}
+                      <div className="project-tech-section">
+                        <h4>기술 스택</h4>
+                        <div className="project-tech-tags">
+                          {project.tech.map((tech) => {
+                            if (typeof tech === 'string') {
+                              return (
+                                <span key={tech + '-' + project.name} className="tech-badge">
+                                  {tech}
+                                </span>
+                              );
+                            } else if (tech && typeof tech === 'object' && (tech as any).name) {
+                              return (
+                                <span key={(tech as any).name + '-' + project.name} className="tech-badge">
+                                  {(tech as any).name}
+                                </span>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+                      </div>
+
+                      {/* 액션 버튼 */}
+                      <div className="project-actions">
+                        <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-primary">
+                          <span>▶️</span>
+                          상세 보기
+                        </a>
+                        <a href={project.link} target="_blank" rel="noreferrer" className="btn btn-secondary">
+                          <span>🔗</span>
+                          라이브 데모
+                        </a>
+                        <button className="btn btn-tertiary">
+                          <span>📄</span>
+                          문서
+                        </button>
+                      </div>
                     </div>
                   </article>
                 ))}
@@ -240,40 +309,66 @@ function App() {
             {/* Skills 섹션 */}
             <section id="skills" className="blog-section">
               <h2>🛠️ Tech Stack</h2>
+              <div className="tech-tabs">
+                <button
+                  className={`tech-tab${activeTab === 'frontend' ? ' active' : ''}`}
+                  onClick={() => setActiveTab('frontend')}
+                >
+                  <span className="tab-icon" role="img" aria-label="frontend">💻</span>
+                  Frontend
+                </button>
+                <button
+                  className={`tech-tab${activeTab === 'backend' ? ' active' : ''}`}
+                  onClick={() => setActiveTab('backend')}
+                >
+                  <span className="tab-icon" role="img" aria-label="backend">⚙️</span>
+                  Backend
+                </button>
+                <button
+                  className={`tech-tab${activeTab === 'ai' ? ' active' : ''}`}
+                  onClick={() => setActiveTab('ai')}
+                >
+                  <span className="tab-icon" role="img" aria-label="ai">🤖</span>
+                  AI & Tools
+                </button>
+              </div>
               <div className="skills-grid">
-                <div className="skill-group">
-                  <h4>Backend / Full Stack</h4>
+                {activeTab === 'frontend' && (
                   <div className="skill-items">
-                    {skills.core.map((skill, idx) => (
-                      <span key={skill.name + '-' + idx} className="skill-item">
-                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                        {skill.name}
-                      </span>
-                    ))}
+                    {frontendSkills.map((skill, idx) =>
+                      skill ? (
+                        <span key={skill.name + '-' + idx} className="skill-item">
+                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                          {skill.name}
+                        </span>
+                      ) : null
+                    )}
                   </div>
-                </div>
-                <div className="skill-group">
-                  <h4>UI / UX</h4>
+                )}
+                {activeTab === 'backend' && (
                   <div className="skill-items">
-                    {skills.ui.map((skill, idx) => (
-                      <span key={skill.name + '-' + idx} className="skill-item">
-                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                        {skill.name}
-                      </span>
-                    ))}
+                    {backendSkills.map((skill, idx) =>
+                      skill ? (
+                        <span key={skill.name + '-' + idx} className="skill-item">
+                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                          {skill.name}
+                        </span>
+                      ) : null
+                    )}
                   </div>
-                </div>
-                <div className="skill-group">
-                  <h4>DevOps & Infrastructure</h4>
+                )}
+                {activeTab === 'ai' && (
                   <div className="skill-items">
-                    {skills.tooling.map((skill, idx) => (
-                      <span key={skill.name + '-' + idx} className="skill-item">
-                        <img src={skill.icon} alt={skill.name} className="skill-icon" />
-                        {skill.name}
-                      </span>
-                    ))}
+                    {aiSkills.length > 0 ? aiSkills.map((skill, idx) =>
+                      skill ? (
+                        <span key={skill.name + '-' + idx} className="skill-item">
+                          <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                          {skill.name}
+                        </span>
+                      ) : null
+                    ) : <span style={{color:'#888'}}>AI 및 툴 관련 기술 정보가 없습니다.</span>}
                   </div>
-                </div>
+                )}
               </div>
             </section>
 
