@@ -6,6 +6,15 @@ function App() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,13 +63,22 @@ function App() {
               <h1>Yubin DevLog</h1>
               <p>기술과 열정이 만나는 공간</p>
             </div>
-            <nav className="blog-nav">
-              <a href="#home">Home</a>
-              <a href="#about">About</a>
-              <a href="#projects">Projects</a>
-              <a href="#experience">Experience</a>
-              <a href="#contact">Contact</a>
-            </nav>
+            <div className="header-controls">
+              <nav className="blog-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+              </nav>
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)} 
+                className="dark-mode-toggle"
+                title={isDarkMode ? '라이트 모드' : '다크 모드'}
+              >
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+            </div>
           </div>
         </header>
 

@@ -7,7 +7,7 @@ export const profile = {
   location: 'Seoul, South Korea',
   availability: '2026 Q1부터 신규 프로젝트 합류 가능',
   email: 'hello@kimfolio.dev',
-  image: '/profile.jpg', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
+  image: '/profile.png', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
   intro: '안녕하세요! 백엔드와 풀스택 개발에 열정을 가진 개발자 조유빈입니다. 시스템 설계, 데이터 모델링, API 아키텍처에 집중하며, 사용자가 신뢰할 수 있는 견고한 서비스를 만드는 것을 목표로 합니다. 확장 가능한 코드 작성과 성능 최적화를 중요하게 생각합니다.',
 }
 
@@ -54,6 +54,7 @@ export const projects = [
     link: '/kdt-game/index.html',
     icon: '/kdt-game/knife_icon.png',
     video: '', // 시연 영상 URL
+    thumbnail: '',
   },
   {
     name: 'CVS(편의점 관리 시스템)',
@@ -71,6 +72,7 @@ export const projects = [
     link: 'https://insights.example.com',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
+    thumbnail: '',
   },
   {
     name: '근로자 근무 관리 어플',
@@ -88,6 +90,7 @@ export const projects = [
     link: 'https://studio.example.com',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
+    thumbnail: '',
   },
   {
     name: 'Asura Arena',
@@ -105,6 +108,7 @@ export const projects = [
     link: 'https://soundwave.example.com',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
+    thumbnail: '',
   },
   {
     name: 'Wanderlog',
@@ -122,6 +126,7 @@ export const projects = [
     link: 'https://wanderlog.example.com',
     icon: '', // 프로젝트 아이콘 경로 (public 폴더에 이미지를 추가하세요)
     video: '', // 시연 영상 URL
+    thumbnail: '',
   },
 ]
 
@@ -153,4 +158,4 @@ export const contact = {
   linkedIn: 'https://linkedin.com/in/kimfolio',
   resume: 'https://drive.google.com/kimfolio-resume',
 }
- 
+
