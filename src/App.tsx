@@ -8,6 +8,19 @@ function App() {
   const [isTyping, setIsTyping] = useState(true);
   const [typewriterText, setTypewriterText] = useState('');
   const [isTypewriterComplete, setIsTypewriterComplete] = useState(false);
+  const [qrPattern, setQrPattern] = useState<boolean[]>([]);
+
+  // QR 패턴 애니메이션
+  useEffect(() => {
+    const generatePattern = () => Array.from({ length: 25 }, () => Math.random() > 0.4);
+    setQrPattern(generatePattern());
+    
+    const interval = setInterval(() => {
+      setQrPattern(generatePattern());
+    }, 800);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   // 터미널 타이핑 효과
   useEffect(() => {
@@ -296,8 +309,8 @@ function App() {
                       </div>
                       <div className="card-qr">
                         <div className="qr-pattern">
-                          {Array.from({ length: 25 }, (_, i) => (
-                            <div key={i} className={`qr-cell ${Math.random() > 0.4 ? 'filled' : ''}`}></div>
+                          {qrPattern.map((filled, i) => (
+                            <div key={i} className={`qr-cell ${filled ? 'filled' : ''}`}></div>
                           ))}
                         </div>
                       </div>
