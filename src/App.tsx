@@ -8,6 +8,8 @@ function App() {
   const [isTyping, setIsTyping] = useState(true);
   const [typewriterText, setTypewriterText] = useState('');
   const [isTypewriterComplete, setIsTypewriterComplete] = useState(false);
+  const [taglineText, setTaglineText] = useState('');
+  const [isTaglineComplete, setIsTaglineComplete] = useState(false);
   const [qrPattern, setQrPattern] = useState<boolean[]>([]);
 
   // QR 패턴 애니메이션
@@ -25,14 +27,18 @@ function App() {
   // 터미널 타이핑 효과
   useEffect(() => {
     const lines = [
-      '> Initializing portfolio...',
-      '> Loading developer profile...',
-      `> Welcome, ${profile.name}`,
-      '> Status: Ready for new opportunities',
-      '> Type "help" for available commands'
+      '$ npm run portfolio',
+      '> Compiling developer.tsx...',
+      '> Building skills module... ✓',
+      '> Loading projects... ✓',
+      `> Welcome to ${profile.name}'s workspace`,
+      '> Ready to deploy 🚀'
     ];
     
-    let currentLine = 0;
+    // 첫 번째 라인을 즉시 표시
+    setTerminalLines([lines[0]]);
+    let currentLine = 1;
+    
     const interval = setInterval(() => {
       if (currentLine < lines.length) {
         setTerminalLines(prev => [...prev, lines[currentLine]]);
@@ -41,7 +47,7 @@ function App() {
         setIsTyping(false);
         clearInterval(interval);
       }
-    }, 400);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
@@ -63,6 +69,26 @@ function App() {
 
     return () => clearInterval(typeInterval);
   }, []);
+
+  // Tagline 타이핑 효과 (role 완료 후 시작)
+  useEffect(() => {
+    if (!isTypewriterComplete) return;
+    
+    const targetText = profile.tagline;
+    let currentIndex = 0;
+    
+    const typeInterval = setInterval(() => {
+      if (currentIndex <= targetText.length) {
+        setTaglineText(targetText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTaglineComplete(true);
+        clearInterval(typeInterval);
+      }
+    }, 50);
+
+    return () => clearInterval(typeInterval);
+  }, [isTypewriterComplete]);
 
   // 스크롤 감지로 활성 섹션 업데이트
   useEffect(() => {
@@ -243,7 +269,7 @@ function App() {
                   <div className="terminal-body">
                     {terminalLines.map((line, idx) => (
                       <div key={idx} className="terminal-line">
-                        <span className={line && typeof line === 'string' && line.startsWith('>') ? 'command' : 'output'}>{line || ''}</span>
+                        <span className={line && typeof line === 'string' && (line.startsWith('>') || line.startsWith('$')) ? 'command' : 'output'}>{line || ''}</span>
                       </div>
                     ))}
                     {isTyping && <span className="cursor">▋</span>}
@@ -270,16 +296,16 @@ function App() {
                       <span className="keyword">const</span> role = <span className="string">"{typewriterText}"</span>
                       {!isTypewriterComplete && <span className="typing-cursor">|</span>};
                     </p>
-                    <p className="tagline">{profile.tagline}</p>
+                    <p className="tagline">
+                      {taglineText}
+                      {isTypewriterComplete && !isTaglineComplete && <span className="typing-cursor">|</span>}
+                    </p>
                     <div className="hero-meta">
                       <span className="meta-item">
                         <span className="meta-icon">📍</span>
                         {profile.location}
                       </span>
-                      <span className="meta-item">
-                        <span className="meta-icon">🕐</span>
-                        {profile.availability}
-                      </span>
+                      
                     </div>
                     <div className="hero-actions">
                       <button className="btn-primary" onClick={() => scrollToSection('projects')}>
@@ -365,7 +391,6 @@ function App() {
               </div>
             </div>
           </section>
-
           {/* About Section */}
           <section id="about" className="section">
             <div className="section-header">
@@ -375,47 +400,33 @@ function App() {
                 About Me
               </h2>
             </div>
-            <div className="code-block">
-              <div className="code-content">
-                <div className="code-line">
-                  <span className="line-num">1</span>
-                  <span className="keyword">class</span> <span className="class-name">Developer</span> {'{'}
-                </div>
-                <div className="code-line">
-                  <span className="line-num">2</span>
-                  <span className="property">  name</span> = <span className="string">"{profile.name}"</span>;
-                </div>
-                <div className="code-line">
-                  <span className="line-num">3</span>
-                  <span className="property">  role</span> = <span className="string">"{profile.role}"</span>;
-                </div>
-                <div className="code-line">
-                  <span className="line-num">4</span>
-                  <span className="property">  location</span> = <span className="string">"{profile.location}"</span>;
-                </div>
-                <div className="code-line">
-                  <span className="line-num">5</span>
-                </div>
-                <div className="code-line">
-                  <span className="line-num">6</span>
-                  <span className="keyword">  constructor</span>() {'{'}
-                </div>
-                <div className="code-line">
-                  <span className="line-num">7</span>
-                  <span className="comment">    // {profile.intro}</span>
-                </div>
-                <div className="code-line">
-                  <span className="line-num">8</span>
-                  {'}'}
-                </div>
-                <div className="code-line">
-                  <span className="line-num">9</span>
-                {'}'}
+            <div className="about-content">
+              <div className="code-block">
+                <div className="code-content">
+                  <div className="code-line"><span className="line-num">1</span><span className="keyword">class</span> <span className="class-name">AboutMe</span> {'{'}</div>
+                  <div className="code-line"><span className="line-num">2</span><span className="property">  stack</span> = [<span className="string">"React"</span>, <span className="string">"Supabase"</span>, <span className="string">"TypeScript"</span>];</div>
+                  <div className="code-line"><span className="line-num">3</span><span className="property">  tools</span> = [<span className="string">"Claude Code"</span>, <span className="string">"Cursor"</span>];</div>
+                  <div className="code-line"><span className="line-num">4</span><span className="property">  style</span> = <span className="string">"Vibe Coding"</span>;</div>
+                  <div className="code-line"><span className="line-num">5</span></div>
+                  <div className="code-line"><span className="line-num">6</span><span className="keyword">  description</span>() {'{'}</div>
+                  {profile.about.map((paragraph, idx) => (
+                    <div className="code-line" key={idx}>
+                      <span className="line-num">{7 + idx}</span>
+                      <span className="comment">// {paragraph}</span>
+                    </div>
+                  ))}
+                  <div className="code-line"><span className="line-num">{7 + profile.about.length}</span>{'}'}</div>
+                  <div className="code-line"><span className="line-num">{8 + profile.about.length}</span>{'}'}</div>
                 </div>
               </div>
             </div>
-            <div className="about-summary">
-              <p>{profile.summary}</p>
+            <div className="about-tags">
+              <span className="tag tag-primary">React</span>
+              <span className="tag tag-primary">Supabase</span>
+              <span className="tag tag-primary">TypeScript</span>
+              <span className="tag tag-accent">Claude Code</span>
+              <span className="tag tag-accent">Cursor</span>
+              <span className="tag tag-highlight">Vibe Coding</span>
             </div>
           </section>
 

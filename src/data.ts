@@ -1,14 +1,19 @@
 export const profile = {
   name: '조유빈',
   role: 'Full Stack Developer',
-  tagline: '안정적이고 확장 가능한 백엔드 시스템으로 비즈니스 가치를 만듭니다',
+  tagline: "AI와 함께 아이디어를 현실로, 프론트부터 백엔드까지",
   summary:
     '견고한 백엔드 아키텍처와 데이터 모델 설계가 제 강점입니다. Node.js, NestJS, Prisma로 고성능 서버를 구축하고, PostgreSQL과 Redis로 데이터를 효율적으로 관리합니다. 필요시 React, Next.js로 풀스택 개발도 가능하며, AWS와 Docker 기반 DevOps 파이프라인 구축 경험이 있습니다.',
   location: 'Seoul, South Korea',
   availability: '2026 Q1부터 신규 프로젝트 합류 가능',
   email: 'binss0124@gmail.com',
   image: '/profile.png', // 프로필 이미지 경로 (public 폴더에 이미지를 추가하세요)
-  intro: '안녕하세요! 백엔드와 풀스택 개발에 열정을 가진 개발자 조유빈입니다. 시스템 설계, 데이터 모델링, API 아키텍처에 집중하며, 사용자가 신뢰할 수 있는 견고한 서비스를 만드는 것을 목표로 합니다. 확장 가능한 코드 작성과 성능 최적화를 중요하게 생각합니다.',
+  intro: '안녕하세요! AI와 함께 아이디어를 빠르게 현실로 만드는 풀스택 개발자 조유빈입니다. Vibe Coding으로 프론트엔드부터 백엔드, 배포까지 전 과정을 혼자서도 완성합니다. 견고한 시스템 설계와 효율적인 AI 활용으로, 팀 단위의 생산성을 1인 개발로 실현합니다.',
+  about: [
+    'React와 Supabase를 중심으로 한 풀스택 개발자로서, 아이디어를 빠르게 실현하는 데 집중합니다.',
+    'Synapse AI, 독독 독서 플랫폼, AI 감정 상담 서비스, 센서 게임 플랫폼, 편의점 종합 솔루션 등 다양한 프로젝트를 통해 실제 사용자에게 가치를 전달하는 서비스를 구현해왔습니다.',
+    'Claude Code, Cursor 등 Vibe Coding 도구를 적극 활용하여 빠른 프로토타이핑과 아이디어 검증을 실천하며, 단순 코딩이 아닌 창의적 문제 해결 중심의 개발을 추구합니다.',
+  ],
 }
 
 export const skills = {
